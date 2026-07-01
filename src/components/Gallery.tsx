@@ -15,7 +15,7 @@ export default function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   return (
-    <section id="gallery" className="py-32 md:py-48 bg-noir-light relative" ref={ref}>
+    <section id="gallery" className="py-32 md:py-48 bg-noir-light relative overflow-hidden" ref={ref}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Header */}
         <motion.div

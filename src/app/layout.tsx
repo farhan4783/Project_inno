@@ -55,7 +55,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased w-full overflow-x-hidden">
         {children}
       </body>
     </html>

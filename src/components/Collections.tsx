@@ -10,7 +10,7 @@ export default function Collections() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="collections" className="py-32 md:py-48 relative" ref={ref}>
+    <section id="collections" className="py-32 md:py-48 relative overflow-hidden" ref={ref}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Section header */}
         <motion.div

@@ -9,7 +9,7 @@ export default function Showroom() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="showroom" className="py-32 md:py-48 bg-noir-light relative" ref={ref}>
+    <section id="showroom" className="py-32 md:py-48 bg-noir-light relative overflow-hidden" ref={ref}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Header */}
         <motion.div

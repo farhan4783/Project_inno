@@ -23,7 +23,7 @@ export default function Home() {
       <CustomCursor />
       <ScrollProgress />
       <Navbar />
-      <main>
+      <main className="w-full overflow-x-hidden">
         <Hero />
         <Collections />
         <FeaturedProducts />
