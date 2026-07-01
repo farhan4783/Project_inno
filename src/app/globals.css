@@ -1,26 +1,410 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@200;300;400;500;600&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-gold: #C6A55A;
+  --color-gold-light: #E8D5A3;
+  --color-gold-dark: #A68B3E;
+  --color-gold-muted: #8B7340;
+  --color-noir: #080808;
+  --color-noir-light: #0E0E0E;
+  --color-noir-lighter: #161616;
+  --color-noir-card: #111111;
+  --color-champagne: #E8DCC8;
+  --color-ivory: #F5F0E8;
+  --color-warm-gray: #7A7060;
+  --color-charcoal: #1A1A1A;
+
+  --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================ */
+/*  RESET & BASE                                */
+/* ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background-color: var(--color-noir);
+  color: var(--color-champagne);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+}
+
+/* ============================================ */
+/*  LUXURY TYPOGRAPHY                           */
+/* ============================================ */
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--color-ivory);
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-champagne);
+  opacity: 0.75;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+/* ============================================ */
+/*  GOLD EFFECTS                                */
+/* ============================================ */
+
+.gold-text {
+  background: linear-gradient(135deg, #C6A55A 0%, #E8D5A3 40%, #C6A55A 60%, #E8D5A3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, #C6A55A 0%, #E8D5A3 20%, #C6A55A 40%, #E8D5A3 60%, #C6A55A 80%, #E8D5A3 100%);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldShimmer 6s ease-in-out infinite;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 0% center; }
+  50% { background-position: 300% center; }
+  100% { background-position: 0% center; }
+}
+
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+}
+
+.gold-line-left {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-gold) 0%, transparent 100%);
+}
+
+/* ============================================ */
+/*  LUXURY BUTTONS                              */
+/* ============================================ */
+
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border: 1px solid rgba(198, 165, 90, 0.3);
+  cursor: none;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(198, 165, 90, 0.08), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-luxury:hover {
+  border-color: var(--color-gold);
+  color: var(--color-ivory);
+  box-shadow: 0 0 40px rgba(198, 165, 90, 0.08);
+}
+
+.btn-luxury:hover::before {
+  left: 100%;
+}
+
+.btn-gold-fill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  color: var(--color-noir);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border: none;
+  cursor: none;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+}
+
+.btn-gold-fill:hover {
+  background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(198, 165, 90, 0.25);
+}
+
+/* ============================================ */
+/*  GLASS MORPHISM                              */
+/* ============================================ */
+
+.glass {
+  background: rgba(8, 8, 8, 0.6);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(198, 165, 90, 0.06);
+}
+
+/* ============================================ */
+/*  IMAGE EFFECTS                               */
+/* ============================================ */
+
+.image-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    transparent 40%,
+    rgba(198, 165, 90, 0.06) 50%,
+    transparent 60%
+  );
+  transform: rotate(30deg);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.image-shine:hover::after {
+  transform: rotate(30deg) translate(40%, 40%);
+}
+
+/* ============================================ */
+/*  CUSTOM CURSOR                               */
+/* ============================================ */
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(198, 165, 90, 0.4);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.15s ease-out;
+}
+
+.cursor-ring.hovering {
+  width: 60px;
+  height: 60px;
+  border-color: var(--color-gold);
+  background: rgba(198, 165, 90, 0.05);
+}
+
+/* ============================================ */
+/*  SCROLL PROGRESS                             */
+/* ============================================ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold), var(--color-gold-light));
+  z-index: 9999;
+  transform-origin: left;
+}
+
+/* ============================================ */
+/*  LOADER                                      */
+/* ============================================ */
+
+.loader-container {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: var(--color-noir);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-logo-line {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawLine 2s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+.loader-glow {
+  animation: loaderGlow 2s ease-in-out infinite;
+}
+
+@keyframes loaderGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* ============================================ */
+/*  WHATSAPP FAB                                */
+/* ============================================ */
+
+.whatsapp-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  cursor: none;
+}
+
+.whatsapp-fab-btn {
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.whatsapp-fab-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 30px rgba(37, 211, 102, 0.45);
+}
+
+/* ============================================ */
+/*  SECTION LABELS                              */
+/* ============================================ */
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-gold-muted);
+}
+
+/* ============================================ */
+/*  EDITORIAL DIVIDER                           */
+/* ============================================ */
+
+.editorial-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.editorial-divider::before,
+.editorial-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(198, 165, 90, 0.12);
+}
+
+/* ============================================ */
+/*  SCROLLBAR                                   */
+/* ============================================ */
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-noir); }
+::-webkit-scrollbar-thumb { background: rgba(198, 165, 90, 0.2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(198, 165, 90, 0.4); }
+
+::selection {
+  background: rgba(198, 165, 90, 0.2);
+  color: var(--color-ivory);
+}
+
+/* ============================================ */
+/*  MOBILE OVERRIDES                            */
+/* ============================================ */
+
+@media (max-width: 768px) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+  .btn-luxury, .btn-gold-fill { cursor: pointer; }
 }
