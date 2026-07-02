@@ -10,7 +10,7 @@ export default function FeaturedProducts() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="featured" className="py-32 md:py-48 bg-noir-light relative overflow-hidden" ref={ref}>
+    <section id="featured" className="py-16 md:py-24 bg-noir-light relative overflow-hidden" ref={ref}>
       {/* Subtle background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/[0.02] rounded-full blur-[200px] pointer-events-none" />
 
@@ -20,7 +20,7 @@ export default function FeaturedProducts() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 md:mb-24"
+          className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-14"
         >
           <div>
             <div className="flex items-center gap-4 mb-6">

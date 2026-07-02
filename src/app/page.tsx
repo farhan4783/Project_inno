@@ -15,6 +15,7 @@ import Loader from "@/components/Loader";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
+import { testimonials } from "@/config/content";
 
 export default function Home() {
   return (
@@ -25,12 +26,17 @@ export default function Home() {
       <Navbar />
       <main className="w-full overflow-x-hidden">
         <Hero />
+        {/* Gold accent divider — Hero → Collections */}
+        <div className="gold-line opacity-30 mx-10 md:mx-20" />
         <Collections />
         <FeaturedProducts />
         <Heritage />
         <Gallery />
-        <Testimonials />
+        {/* Only render Testimonials when real reviews exist */}
+        {testimonials.length > 0 && <Testimonials />}
+        {/* Gold accent divider — FAQ → Visit Us */}
         <FAQ />
+        <div className="gold-line opacity-30 mx-10 md:mx-20" />
         <Showroom />
         <Contact />
       </main>
@@ -40,3 +46,4 @@ export default function Home() {
     </SmoothScroll>
   );
 }
+

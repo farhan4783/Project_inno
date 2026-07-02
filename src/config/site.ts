@@ -7,8 +7,8 @@ export const siteConfig = {
   since: 1988,
   
   // Contact
-  phone: "+919953656749",
-  phoneDisplay: "+91 99536 56749",
+  phone: "+919077000064",
+  phoneDisplay: "+91 90770 00064",
   whatsappMessage: "Hi, I saw your website and I am interested in your jewellery collection. Can you help me?",
   email: "",
   instagram: "https://www.instagram.com/anasandsonsjewellers.co/",

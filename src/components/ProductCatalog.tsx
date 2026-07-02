@@ -11,7 +11,7 @@ export default function ProductCatalog() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
-  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
+  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("popular");
 
@@ -21,7 +21,7 @@ export default function ProductCatalog() {
   // Accordion States for Sidebar Filters
   const [isMaterialExpanded, setIsMaterialExpanded] = useState<boolean>(true);
   const [isPriceExpanded, setIsPriceExpanded] = useState<boolean>(true);
-  const [isGenderExpanded, setIsGenderExpanded] = useState<boolean>(true);
+  const [isOccasionExpanded, setIsOccasionExpanded] = useState<boolean>(true);
 
   // Detail Modal State
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -51,9 +51,9 @@ export default function ProductCatalog() {
     );
   };
 
-  const toggleGender = (gender: string) => {
-    setSelectedGenders(prev =>
-      prev.includes(gender) ? prev.filter(g => g !== gender) : [...prev, gender]
+  const toggleOccasion = (occasion: string) => {
+    setSelectedOccasions(prev =>
+      prev.includes(occasion) ? prev.filter(o => o !== occasion) : [...prev, occasion]
     );
   };
 
@@ -67,7 +67,7 @@ export default function ProductCatalog() {
     setSelectedCategory("all");
     setSearchQuery("");
     setSelectedMaterials([]);
-    setSelectedGenders([]);
+    setSelectedOccasions([]);
     setSelectedPriceRanges([]);
     setSortBy("popular");
   };
@@ -98,9 +98,18 @@ export default function ProductCatalog() {
           return false;
         }
 
-        // Gender Filter
-        if (selectedGenders.length > 0 && !selectedGenders.includes(product.gender)) {
-          return false;
+        // Occasion filter — maps occasion tags to product gender field broadly
+        // (bridal → women, engagement → women+unisex, daily wear → all, gifting → all, festive → all)
+        if (selectedOccasions.length > 0) {
+          const occasionMatch = selectedOccasions.some(occ => {
+            if (occ === "bridal") return product.gender === "women" && (product.category === "necklaces" || product.category === "bangles" || product.category === "earrings");
+            if (occ === "engagement") return product.category === "rings" || product.category === "pendants";
+            if (occ === "daily-wear") return product.price < 150000;
+            if (occ === "gifting") return product.price < 200000;
+            if (occ === "festive") return product.material === "gold";
+            return true;
+          });
+          if (!occasionMatch) return false;
         }
 
         // Price Filter
@@ -136,7 +145,7 @@ export default function ProductCatalog() {
           return getScore(b) - getScore(a);
         }
       });
-  }, [selectedCategory, searchQuery, selectedMaterials, selectedGenders, selectedPriceRanges, sortBy]);
+  }, [selectedCategory, searchQuery, selectedMaterials, selectedOccasions, selectedPriceRanges, sortBy]);
 
   // Prefilled WhatsApp link builder
   const getWhatsAppLink = (product: Product) => {
@@ -287,19 +296,19 @@ export default function ProductCatalog() {
                 </AnimatePresence>
               </div>
 
-              {/* Gender Filter Accordion */}
+              {/* Occasion Filter Accordion */}
               <div className="py-4">
                 <button
-                  onClick={() => setIsGenderExpanded(!isGenderExpanded)}
+                  onClick={() => setIsOccasionExpanded(!isOccasionExpanded)}
                   className="flex items-center justify-between w-full text-xs uppercase tracking-wider text-ivory/80 font-medium hover:text-gold"
                 >
-                  <span>Gender / Styling</span>
-                  <svg className={`w-3 h-3 transform transition-transform duration-300 ${isGenderExpanded ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span>Occasion</span>
+                  <svg className={`w-3 h-3 transform transition-transform duration-300 ${isOccasionExpanded ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 <AnimatePresence initial={false}>
-                  {isGenderExpanded && (
+                  {isOccasionExpanded && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
@@ -307,15 +316,21 @@ export default function ProductCatalog() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden mt-3 space-y-2.5"
                     >
-                      {["women", "men", "unisex", "kids"].map(gen => (
-                        <label key={gen} className="flex items-center gap-3 text-xs text-champagne/60 hover:text-ivory cursor-pointer font-light">
+                      {[
+                        { id: "bridal", label: "Bridal" },
+                        { id: "engagement", label: "Engagement" },
+                        { id: "daily-wear", label: "Daily Wear" },
+                        { id: "gifting", label: "Gifting" },
+                        { id: "festive", label: "Festive / Eid" },
+                      ].map(occ => (
+                        <label key={occ.id} className="flex items-center gap-3 text-xs text-champagne/60 hover:text-ivory cursor-pointer font-light">
                           <input
                             type="checkbox"
-                            checked={selectedGenders.includes(gen)}
-                            onChange={() => toggleGender(gen)}
+                            checked={selectedOccasions.includes(occ.id)}
+                            onChange={() => toggleOccasion(occ.id)}
                             className="w-3.5 h-3.5 accent-gold bg-noir border-gold/20 rounded-sm focus:ring-0"
                           />
-                          <span className="capitalize">{gen}</span>
+                          <span>{occ.label}</span>
                         </label>
                       ))}
                     </motion.div>
@@ -338,7 +353,7 @@ export default function ProductCatalog() {
                 <svg className="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
-                <span>Filters ({selectedMaterials.length + selectedPriceRanges.length + selectedGenders.length})</span>
+                <span>Filters ({selectedMaterials.length + selectedPriceRanges.length + selectedOccasions.length})</span>
               </button>
               
               {/* Search (Mobile/Tablet Viewports) */}
@@ -369,8 +384,8 @@ export default function ProductCatalog() {
             </div>
 
             {/* Product Count indicator */}
-            <div className="text-[11px] tracking-widest text-champagne/30 uppercase">
-              Showing {filteredProducts.length} of {products.length} masterworks
+            <div className="text-[11px] tracking-wider text-champagne/60 uppercase">
+              {filteredProducts.length} piece{filteredProducts.length !== 1 ? "s" : ""} in view
             </div>
 
             {/* Grid */}
@@ -403,55 +418,66 @@ export default function ProductCatalog() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="bg-noir-card border border-gold/5 rounded-sm overflow-hidden group hover:border-gold/20 hover:bg-noir-light transition-all duration-500 flex flex-col cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
+                    className="bg-noir-card border border-gold/5 rounded-sm overflow-hidden group hover:border-gold/20 hover:bg-noir-light transition-all duration-500 flex flex-col"
                   >
-                    {/* Image Container */}
-                    <div className="relative aspect-square w-full bg-noir overflow-hidden">
+                    {/* Image Container — bg-[#F2F0EC] prevents transparent PNG checkerboard */}
+                    <div
+                      className="relative aspect-square w-full bg-[#F2F0EC] overflow-hidden cursor-pointer"
+                      onClick={() => setSelectedProduct(product)}
+                    >
                       <Image
                         src={product.image}
                         alt={product.name}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        sizes="(max-w-768px) 50vw, (max-w-1024px) 33vw, 25vw"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-noir/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
-                      {/* Floating Badge */}
-                      {product.badge && (
-                        <span className="absolute top-3 left-3 bg-gradient-to-r from-gold to-gold-dark text-noir font-body text-[9px] tracking-wider uppercase px-2 py-0.5 font-semibold rounded-sm">
-                          {product.badge}
-                        </span>
-                      )}
 
-                      {/* Floating Spec Quick Details */}
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[9px] text-ivory/60 tracking-wider uppercase font-body opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span>{product.purity.split(" ")[0]}</span>
-                        <span>{product.weight}</span>
+                      {/* Purity tag (replacing marketing badge) */}
+                      <span className="absolute top-3 left-3 bg-noir/70 backdrop-blur-sm text-gold/80 font-body text-[9px] tracking-wider uppercase px-2 py-0.5 border border-gold/15">
+                        {product.purity.split(" ")[0]}
+                      </span>
+
+                      {/* Hover weight detail */}
+                      <div className="absolute bottom-3 right-3 text-[9px] text-ivory/70 tracking-wider font-body opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {product.weight}
                       </div>
                     </div>
 
                     {/* Meta Content */}
                     <div className="p-4 flex-1 flex flex-col justify-between">
                       <div>
-                        <span className="text-[9px] text-gold/50 tracking-[0.2em] uppercase font-body mb-1 block">
+                        <span className="text-[9px] text-gold/70 tracking-[0.2em] uppercase font-body mb-1 block">
                           {product.category}
                         </span>
-                        <h4 className="font-heading text-base md:text-lg text-ivory group-hover:text-gold transition-colors font-light leading-tight mb-2 line-clamp-1">
+                        {/* line-clamp-2 so long titles don't get cut */}
+                        <h4
+                          className="font-heading text-base md:text-lg text-ivory group-hover:text-gold transition-colors font-light leading-tight mb-2 line-clamp-2 cursor-pointer"
+                          onClick={() => setSelectedProduct(product)}
+                        >
                           {product.name}
                         </h4>
                       </div>
-                      
-                      <div className="flex items-end justify-between border-t border-gold/5 pt-3 mt-2">
+
+                      <div className="border-t border-gold/5 pt-3 mt-2 space-y-3">
                         <div>
-                          <div className="text-[9px] text-champagne/30 tracking-wider uppercase mb-0.5">Est. Price</div>
+                          <div className="text-[9px] text-champagne/60 tracking-wider uppercase mb-0.5">Est. Price</div>
                           <div className="font-heading text-sm text-gold font-medium">{product.priceDisplay}</div>
                         </div>
-                        <div className="w-7 h-7 rounded-full bg-gold/5 border border-gold/10 group-hover:bg-gold group-hover:border-transparent flex items-center justify-center transition-all">
-                          <svg className="w-3.5 h-3.5 text-gold group-hover:text-noir transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.015 22l5.127-1.328A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1.061 14.281c-.378.378-.853.53-1.339.424a6.533 6.533 0 01-3.662-2.148 6.533 6.533 0 01-2.148-3.662c-.106-.486.046-.961.424-1.339l.617-.617a.64.64 0 01.905 0l1.242 1.242a.64.64 0 010 .905l-.348.348c-.097.097-.123.243-.064.368a4.417 4.417 0 001.371 1.777c.489.377 1.054.671 1.668.868.125.04.271.014.368-.083l.348-.348a.64.64 0 01.905 0l1.242 1.242a.64.64 0 010 .905l-.617.617z"/>
+                        {/* WhatsApp Enquire CTA — clear action, not a mystery icon */}
+                        <a
+                          href={getWhatsAppLink(product)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 w-full py-2 bg-gold/5 border border-gold/10 hover:bg-gold/15 hover:border-gold/30 text-gold text-[10px] tracking-wider uppercase transition-all duration-300 font-medium"
+                          onClick={e => e.stopPropagation()}
+                        >
+                          <svg className="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                           </svg>
-                        </div>
+                          Enquire on WhatsApp
+                        </a>
                       </div>
                     </div>
                   </motion.div>
@@ -530,19 +556,25 @@ export default function ProductCatalog() {
                     </div>
                   </div>
 
-                  {/* Gender */}
+                  {/* Occasion (mobile drawer) */}
                   <div className="pb-4">
-                    <h5 className="text-[10px] uppercase tracking-wider text-gold mb-3 font-semibold">Gender / Styling</h5>
+                    <h5 className="text-[10px] uppercase tracking-wider text-gold mb-3 font-semibold">Occasion</h5>
                     <div className="space-y-2">
-                      {["women", "men", "unisex", "kids"].map(gen => (
-                        <label key={gen} className="flex items-center gap-3 text-xs text-champagne/60 hover:text-ivory cursor-pointer capitalize">
+                      {[
+                        { id: "bridal", label: "Bridal" },
+                        { id: "engagement", label: "Engagement" },
+                        { id: "daily-wear", label: "Daily Wear" },
+                        { id: "gifting", label: "Gifting" },
+                        { id: "festive", label: "Festive / Eid" },
+                      ].map(occ => (
+                        <label key={occ.id} className="flex items-center gap-3 text-xs text-champagne/60 hover:text-ivory cursor-pointer">
                           <input
                             type="checkbox"
-                            checked={selectedGenders.includes(gen)}
-                            onChange={() => toggleGender(gen)}
+                            checked={selectedOccasions.includes(occ.id)}
+                            onChange={() => toggleOccasion(occ.id)}
                             className="w-3.5 h-3.5 accent-gold bg-noir border-gold/20 rounded-sm"
                           />
-                          <span>{gen}</span>
+                          <span>{occ.label}</span>
                         </label>
                       ))}
                     </div>
@@ -605,11 +637,10 @@ export default function ProductCatalog() {
                     priority
                     sizes="(max-w-768px) 100vw, 50vw"
                   />
-                  {selectedProduct.badge && (
-                    <span className="absolute top-6 left-6 bg-gradient-to-r from-gold to-gold-dark text-noir font-body text-xs tracking-wider uppercase px-3 py-1 font-semibold rounded-sm">
-                      {selectedProduct.badge}
-                    </span>
-                  )}
+                  {/* Purity tag in modal (replaces marketing badge) */}
+                  <span className="absolute top-6 left-6 bg-noir/70 backdrop-blur-sm text-gold/90 font-body text-xs tracking-wider uppercase px-3 py-1 border border-gold/20">
+                    {selectedProduct.purity.split(" ")[0]}
+                  </span>
                 </div>
 
                 {/* Right Side: Product Details & Specs */}

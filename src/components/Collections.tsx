@@ -10,14 +10,14 @@ export default function Collections() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="collections" className="py-32 md:py-48 relative overflow-hidden" ref={ref}>
+    <section id="collections" className="py-16 md:py-24 relative overflow-hidden" ref={ref}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
-          className="mb-24 md:mb-32"
+          className="mb-12 md:mb-16"
         >
           <div className="flex items-center gap-4 mb-6">
             <span className="w-12 h-px bg-gold/30" />
@@ -48,7 +48,7 @@ function CollectionItem({ collection, index, reversed }: { collection: typeof co
   return (
     <div
       ref={ref}
-      className={`grid md:grid-cols-12 gap-6 md:gap-12 mb-32 md:mb-48 items-center ${reversed ? "" : ""}`}
+      className={`grid md:grid-cols-12 gap-6 md:gap-12 mb-16 md:mb-24 items-center ${reversed ? "" : ""}`}
     >
       {/* Image */}
       <motion.div
@@ -57,6 +57,7 @@ function CollectionItem({ collection, index, reversed }: { collection: typeof co
         transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`${reversed ? "md:col-start-7 md:col-span-6 md:order-2" : "md:col-span-6"} relative group`}
       >
+        {/* Main image — overflow-hidden clips the inset thumbnail */}
         <div className="relative overflow-hidden aspect-[3/4] image-shine">
           <img
             src={collection.image}
@@ -65,21 +66,22 @@ function CollectionItem({ collection, index, reversed }: { collection: typeof co
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-noir/40 to-transparent" />
+
+          {/* Inset second image — contained fully within the parent's clip */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className={`absolute bottom-3 ${reversed ? "left-3" : "right-3"} w-1/3 aspect-square overflow-hidden ring-2 ring-noir/70`}
+          >
+            <img
+              src={collection.secondImage}
+              alt=""
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </motion.div>
         </div>
-        {/* Floating second image */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.4 }}
-          className={`absolute ${reversed ? "-left-6 md:-left-12" : "-right-6 md:-right-12"} -bottom-8 md:-bottom-16 w-2/5 aspect-square overflow-hidden border border-gold/10 shadow-2xl hidden md:block`}
-        >
-          <img
-            src={collection.secondImage}
-            alt=""
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </motion.div>
       </motion.div>
 
       {/* Text */}

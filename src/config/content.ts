@@ -138,32 +138,18 @@ export const timeline = [
   },
 ];
 
-export const testimonials = [
-  {
-    name: "Ayesha K.",
-    text: "We bought our entire wedding set from Anas Jewellers. The quality and variety is unmatched in the area. They treated us like family.",
-    rating: 5,
-    occasion: "Wedding",
-  },
-  {
-    name: "Mohd. Irfan",
-    text: "Been buying gold from Anas bhai since my father's time. Three generations of trust. The new showroom is beautiful.",
-    rating: 5,
-    occasion: "Family",
-  },
-  {
-    name: "Sana R.",
-    text: "Their Italian gold designs are stunning. I came for one piece and left with three. The staff is very helpful and patient.",
-    rating: 5,
-    occasion: "Self Purchase",
-  },
-  {
-    name: "Dr. Farhan A.",
-    text: "Bought an engagement ring here. They helped me choose the perfect diamond within my budget. Exceptional service.",
-    rating: 5,
-    occasion: "Engagement",
-  },
+// ADD YOUR REAL CUSTOMER REVIEWS HERE
+// Each entry needs: name, text (the quote), rating (1-5), occasion (e.g. "Wedding")
+export const testimonials: { name: string; text: string; rating: number; occasion: string }[] = [
+  // Example:
+  // {
+  //   name: "Ayesha K.",
+  //   text: "We bought our entire wedding set from Anas Jewellers. Exceptional quality.",
+  //   rating: 5,
+  //   occasion: "Wedding",
+  // },
 ];
+
 
 export const faq = [
   {

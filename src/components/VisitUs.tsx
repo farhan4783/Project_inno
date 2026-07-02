@@ -9,14 +9,14 @@ export default function Showroom() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="showroom" className="py-32 md:py-48 bg-noir-light relative overflow-hidden" ref={ref}>
+    <section id="showroom" className="py-16 md:py-24 bg-noir-light relative overflow-hidden" ref={ref}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
-          className="mb-20 md:mb-28"
+          className="mb-10 md:mb-14"
         >
           <div className="flex items-center gap-4 mb-6">
             <span className="w-12 h-px bg-gold/30" />
@@ -32,7 +32,7 @@ export default function Showroom() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative aspect-video md:aspect-[21/9] overflow-hidden mb-20"
+          className="relative aspect-video md:aspect-[21/9] overflow-hidden mb-10"
         >
           <video
             autoPlay
@@ -90,7 +90,7 @@ export default function Showroom() {
               <div className="flex justify-between"><span>Friday</span><span className="text-ivory/70">{siteConfig.hours.friday}</span></div>
               <div className="flex justify-between"><span>Sat & Sun</span><span className="text-ivory/70">{siteConfig.hours.sunday}</span></div>
             </div>
-            <p className="text-champagne/20 text-[10px] mt-4">Please call to confirm hours.</p>
+
           </motion.div>
 
           {/* Contact */}

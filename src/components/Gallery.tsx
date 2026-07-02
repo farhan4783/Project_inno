@@ -15,14 +15,14 @@ export default function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   return (
-    <section id="gallery" className="py-32 md:py-48 bg-noir-light relative overflow-hidden" ref={ref}>
+    <section id="gallery" className="py-16 md:py-24 bg-noir-light relative overflow-hidden" ref={ref}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 md:mb-24"
+          className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-14"
         >
           <div>
             <div className="flex items-center gap-4 mb-6">

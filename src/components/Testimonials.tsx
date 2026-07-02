@@ -5,7 +5,7 @@ import { testimonials } from "@/config/content";
 
 export default function Testimonials() {
   return (
-    <section className="py-32 md:py-48 relative overflow-hidden">
+    <section className="py-16 md:py-24 relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute top-0 right-0 w-1/3 h-full">
         <div className="w-full h-full bg-gradient-to-l from-gold/[0.02] to-transparent" />
@@ -18,7 +18,7 @@ export default function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1 }}
-          className="mb-20 md:mb-28"
+          className="mb-10 md:mb-14"
         >
           <div className="flex items-center gap-4 mb-6">
             <span className="w-12 h-px bg-gold/30" />
@@ -66,9 +66,7 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <p className="text-center text-champagne/15 text-[10px] tracking-wider mt-6 uppercase">
-          Sample reviews. Ask us to replace with your real customer feedback.
-        </p>
+        {/* Real customer reviews will be added here — edit testimonials array in src/config/content.ts */}
       </div>
     </section>
   );
