@@ -15,12 +15,13 @@ export default function Navbar() {
   }, []);
 
   const links = [
-    { label: "Collections", href: "#collections" },
-    { label: "Atelier", href: "#featured" },
-    { label: "Heritage", href: "#heritage" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Showroom", href: "#showroom" },
-    { label: "Contact", href: "#contact" },
+    { label: "Collections", href: "/#collections" },
+    { label: "Catalog", href: "/catalog" },
+    { label: "Atelier", href: "/#featured" },
+    { label: "Heritage", href: "/#heritage" },
+    { label: "Gallery", href: "/#gallery" },
+    { label: "Showroom", href: "/#showroom" },
+    { label: "Contact", href: "/#contact" },
   ];
 
   const whatsappUrl = `https://wa.me/${siteConfig.phone.replace("+", "")}?text=${encodeURIComponent(siteConfig.whatsappMessage)}`;
