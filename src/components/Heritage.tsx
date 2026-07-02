@@ -96,14 +96,15 @@ export default function Heritage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gold/5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {highlights.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.5 + i * 0.1 }}
-              className="bg-noir p-8 md:p-12 text-center group hover:bg-noir-light transition-colors duration-700"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.1 * i }}
+              className="bg-noir-card border border-gold/5 p-8 md:p-12 text-center group hover:bg-noir-light hover:border-gold/20 transition-all duration-700"
             >
               <div className="font-heading text-4xl md:text-5xl lg:text-6xl gold-shimmer mb-3 font-light">
                 {stat.number}
@@ -123,15 +124,13 @@ export default function Heritage() {
 }
 
 function TimelineItem({ item, index }: { item: typeof timeline[0]; index: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
   const isLeft = index % 2 === 0;
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, delay: 0.1 }}
       className={`relative flex items-start mb-16 md:mb-24 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}
     >

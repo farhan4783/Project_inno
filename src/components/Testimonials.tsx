@@ -1,15 +1,11 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { testimonials } from "@/config/content";
 
 export default function Testimonials() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section className="py-32 md:py-48 relative overflow-hidden" ref={ref}>
+    <section className="py-32 md:py-48 relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute top-0 right-0 w-1/3 h-full">
         <div className="w-full h-full bg-gradient-to-l from-gold/[0.02] to-transparent" />
@@ -19,7 +15,8 @@ export default function Testimonials() {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1 }}
           className="mb-20 md:mb-28"
         >
@@ -33,14 +30,15 @@ export default function Testimonials() {
         </motion.div>
 
         {/* Testimonials - Editorial Layout */}
-        <div className="grid md:grid-cols-2 gap-px bg-gold/5">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.15 * i }}
-              className="bg-noir p-8 md:p-12 lg:p-16 group hover:bg-noir-light transition-colors duration-700"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.1 * i }}
+              className="bg-noir-card border border-gold/5 p-8 md:p-12 lg:p-16 group hover:bg-noir-light hover:border-gold/20 transition-all duration-700"
             >
               {/* Stars */}
               <div className="flex gap-1 mb-6">
