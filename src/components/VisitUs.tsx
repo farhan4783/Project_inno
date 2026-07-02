@@ -121,7 +121,7 @@ export default function Showroom() {
           className="mt-px aspect-[2/1] md:aspect-[3/1] overflow-hidden border border-gold/5"
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.7!2d77.2883!3d28.5613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBatla+House+Okhla+Delhi!5e0!3m2!1sen!2sin!4v1"
+            src="https://maps.google.com/maps?q=Anas%20%26%20Sons%20Jewellers%2C%20334-G%2C%20Batla%20House%2C%20Jamia%20Nagar%2C%20Okhla%2C%20New%20Delhi%2C%20Delhi%20110025&t=&z=17&ie=UTF8&iwloc=&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.7) contrast(1.3)' }}
