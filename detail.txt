@@ -1,0 +1,168 @@
+========================================================================
+                      ANAS & SONS JEWELLERS
+                   COMPLETE PROJECT DOCUMENTATION
+========================================================================
+
+1. PROJECT OVERVIEW & PURPOSE
+------------------------------------------------------------------------
+This project is a premium, high-end digital showcase website built for 
+Anas & Sons Jewellers, a family-run jewelry establishment founded in 1988 
+located in Batla House, Okhla, New Delhi.
+
+Unlike generic e-commerce templates that rely on self-serve checkout carts 
+and generic buy buttons, this site is designed as an interactive "Digital 
+Showroom." It recognizes that high-value jewelry purchasing (ranging from 
+₹30,000 to ₹5,00,000+) in India is relationship-driven, trust-sensitive, 
+and heavily dependent on daily gold market rates. 
+
+The primary goal of the site is to let customers browse a highly curated, 
+visually stunning catalog of gold, diamond, and silver masterpieces and 
+seamlessly initiate a real conversation with the jeweler via pre-filled 
+WhatsApp messages.
+
+------------------------------------------------------------------------
+2. TECH STACK USED
+------------------------------------------------------------------------
+The website is engineered with a modern, fast, and optimized frontend stack:
+
+- Framework: Next.js 16 (App Router configuration)
+  Provides lightning-fast page loading times, pre-rendered static paths 
+  for maximum SEO indexing, and optimized image processing.
+  
+- Language: TypeScript
+  Enforces strict type definitions across product schemas, component props, 
+  and business configs to prevent runtime errors.
+  
+- Styling: Tailwind CSS (v4 configuration)
+  Used for responsive layouts, custom utility classes, animations, and the 
+  curated color system (Noir & Gold themes).
+  
+- Animations: Framer Motion
+  Powers all scroll-triggered reveal animations, mobile sidebar drawer 
+  transitions, and interactive modal overlays with fluid bezier physics.
+  
+- Smooth Scroll: Lenis Scroll
+  A light, high-performance smooth scroll library that standardizes scrolling 
+  kinetics across Windows, macOS, iOS, and Android browsers.
+  
+- Icons: SVG Vectors
+  All icons, markers, and buttons are built with lightweight inline SVGs to 
+  reduce HTTP requests and maintain sharpness on retina displays.
+
+------------------------------------------------------------------------
+3. DESIGN AESTHETICS & DESIGN SYSTEM
+------------------------------------------------------------------------
+The website features a rich, dark-mode, editorial aesthetic inspired by 
+global luxury fashion houses:
+
+- Color Palette:
+  * Noir Base: #080808 (Main background, provides depth)
+  * Noir Light: #0E0E0E (Section alternative background)
+  * Noir Card: #111111 (Card background, stands out subtly)
+  * Gold: #C6A55A (Primary accent color used for borders, headers, and highlights)
+  * Gold Light: #E8D5A3 (Used for hover states and shimmering gradients)
+  * Ivory: #F5F0E8 (Clean contrast color for header typography)
+  * Champagne: #E8DCC8 (Softer off-white for description paragraphs)
+  * Neutral Off-White: #F2F0EC (Used behind transparent product PNGs to 
+    eliminate checkerboard patterns)
+
+- Typography:
+  * Serif font: Cormorant Garamond (Used for all luxury headings, italic 
+    highlights, and quotes)
+  * Sans-serif font: Inter (Used for numbers, specifications, labels, 
+    and descriptive paragraphs)
+
+- Key Visual Elements:
+  * Gold Shimmer: Text gradients that catch the light dynamically.
+  * Editorial Dividers: Subtle gold rules separating blocks.
+  * Inset Collages: Overlapping secondary photos safely clipped inside 
+    their parent grid blocks for an editorial magazine layout.
+  * Scroll Indicator: A progress bar tracking scroll position at the top 
+    of the viewport.
+  * Custom Cursor: A luxury gold dot inside a soft gold ring that expands 
+    and wraps interactive links on hover (safely disabled on touch screens).
+
+------------------------------------------------------------------------
+4. KEY FEATURES
+------------------------------------------------------------------------
+- Interactive Product Catalog (/catalog)
+  A standalone, searchable catalog housing 20 unique stock jewelry pieces.
+  * Multi-criteria Filters: Category tabs, Metal/Material check-boxes, 
+    Price Range check-boxes, and Occasion check-boxes.
+  * Occasion Filter: Maps pieces into Bridal, Engagement, Daily Wear, 
+    Gifting, and Festive buckets.
+  * Real-Time Search: Filters by name, description, material, or category.
+  * Sort Options: Sort by popularity, price (high-to-low/low-to-high), 
+    and gross weight (heavy-to-light).
+
+- Product Lightbox Details Modal
+  Clicking any product card opens a screen-filling showcase overlay:
+  * High-resolution zoom-view of the jewelry.
+  * Direct product specs table: Product Reference (ID), Primary Metal, 
+    Gold Purity, Gross Weight, and Target Gender.
+  * WhatsApp CTA: Pre-fills a message with the product specs and price:
+    "Hi Anas & Sons Jewellers, I am interested in viewing/purchasing... 
+     Est. Price: ₹X,XX,XXX..."
+
+- Immersive Showroom Video Section
+  Integrates video loops showing Okhla's largest showroom space.
+
+- Pinpoint Showroom Google Map
+  Integrates a customized iframe pointing to the exact coordinates of the 
+  showroom at Shop No. 334-G, Batla House. Styled with CSS filters to blend 
+  into the website's dark aesthetic.
+
+- AI Chat Assistant Component
+  A floating conversation helper that suggests pre-defined user questions 
+  (e.g., "Wedding jewellery suggestions", "Custom designs") and directs 
+  inquiries straight to the sales team.
+
+- WhatsApp FAB (Floating Action Button)
+  A persistent button in the lower-right corner of the viewport allowing 
+  instant chat access from any page.
+
+------------------------------------------------------------------------
+5. PROJECT STRUCTURE & CODE ORGANIZATION
+------------------------------------------------------------------------
+The codebase is structured logically for easy maintenance and updates:
+
+- `/public/products/`
+  Houses the 20 categorized, high-resolution stock jewelry images renamed 
+  systematically (e.g., `product-ring-01.jpg`, `product-necklace-02.jpg`).
+
+- `/src/config/`
+  * `site.ts`: The single source of truth for business contact details 
+    (Phone: +919077000064, Address, Store Hours, Instagram link). Updating 
+    details here changes them globally across all pages.
+  * `products.ts`: The catalog database. Houses the specifications, price, 
+    images, and descriptions of the 20 masterwork items.
+  * `content.ts`: Editable text contents, collections copy, FAQs, 
+    and testimonials.
+
+- `/src/components/`
+  * `Navbar.tsx` & `Footer.tsx`: Multi-page layout headers and footers.
+  * `Hero.tsx`: Immersive video landing container.
+  * `Collections.tsx`: Crafted for Every Occasion collection categories.
+  * `FeaturedProducts.tsx`: Standardized horizontal slider for featured items.
+  * `Heritage.tsx`: Timeline showing the family business legacy.
+  * `Gallery.tsx`: Masonry Instagram feed that plays video overlays on hover.
+  * `Testimonials.tsx`: Customer reviews block. (Configured to hide 
+    automatically if the reviews array in content.ts is empty).
+  * `FAQ.tsx`: Accordion list answering common customer concerns.
+  * `VisitUs.tsx`: Store hours grid and Google Map.
+  * `AIAssistant.tsx` & `WhatsAppFAB.tsx`: Floating chat utilities.
+
+- `/src/app/`
+  * `globals.css`: Contains CSS rules, variables, Lenis layout styles, 
+    Tailwind base-layer modifiers, and hover cursor configurations.
+  * `page.tsx`: Landing homepage flow combining sections separated by 
+    custom gold lines.
+  * `catalog/page.tsx`: Dedicated Next.js page routing for the Product Catalog.
+
+------------------------------------------------------------------------
+6. HOW TO DEPLOY THE SITE TO VERCEL
+------------------------------------------------------------------------
+Please reference the file `steps.md` in the root folder for step-by-step 
+instructions on how to hook up your GitHub account to Vercel and publish 
+this website live on a custom domain (e.g. anasandsonsjewellers.co).
+========================================================================
